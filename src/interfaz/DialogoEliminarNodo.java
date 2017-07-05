@@ -3,8 +3,8 @@ package interfaz;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-
 import javax.swing.*;
+
 public class DialogoEliminarNodo extends JFrame{
 	private static DialogoEliminarNodo _instancia;
 	private static final long serialVersionUID = 1L;
@@ -28,7 +28,7 @@ public class DialogoEliminarNodo extends JFrame{
 	private void iniciar(){
 		
 		setBounds(500, 100, 290, 200);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
 		JLabel jLabel = new JLabel("Seleccione el nodo a eliminar");
@@ -62,31 +62,22 @@ public class DialogoEliminarNodo extends JFrame{
 	private void mouseClicked(){
 		for (int i = 0; i < _botones.size(); i++) {
 			int index = i;
-			_botones.get(i).addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent arg0){
-					if(index == 0){
-						
-					}
-					if(index == 1){
-						dispose();
-					}
-				}
-				
-			});
+			accionesMouse(i, index);
 		}
-		_botones.get(0).addMouseListener(new MouseAdapter() {
+	}
+
+	private void accionesMouse(int i, int index) {
+		_botones.get(i).addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				
+			public void mouseClicked(MouseEvent arg0){
+				if(index == 0){ //Eliminar
+					
+				}
+				if(index == 1){ //Cancelar
+					dispose();
+				}
 			}
-		});
-		
-		_botones.get(1).addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				dispose();
-			}
+			
 		});
 	}
 	
