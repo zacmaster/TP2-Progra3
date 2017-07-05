@@ -18,6 +18,7 @@ public class PanelDerecho extends JPanel{
 	private String[] _textoBotones =	{"Agregar nodo","Borrar nodo","Agregar union",
 			"Borrar union","Distancia A y B","Camino Min"};
 	private DialogoAgregarNodo _dialogoAgregarNodo;
+	private DialogoEliminarNodo _dialogoEliminarNodo;
 	
 	
 	
@@ -105,15 +106,19 @@ public class PanelDerecho extends JPanel{
 	}
 
 	private void dialogoEliminarNodo(int i) {
-		
+		String[] s = {"1","2","3"};
+		if(i == 1){
+			_dialogoEliminarNodo = DialogoEliminarNodo.getInstancia(s);
+			_dialogoEliminarNodo.setVisible(true);
+		}
 	}
 
 	private void dialogoAgregarNodo(int i){
 		if(i == 0){
 				_dialogoAgregarNodo = DialogoAgregarNodo.getInstancia();
 				_dialogoAgregarNodo.setVisible(true);
+				_dialogoAgregarNodo.limpiarDatos();
 			}
-			_dialogoAgregarNodo.limpiarDatos();
 		}
 			
 	

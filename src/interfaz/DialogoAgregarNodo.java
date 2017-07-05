@@ -1,6 +1,6 @@
 package interfaz;
 
-import java.awt.EventQueue;
+//import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -41,6 +41,8 @@ public class DialogoAgregarNodo extends JFrame{
 	
 	private void iniciar(){
 		setBounds(500, 200, 300, 250);
+		
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
 		cargarEtiquetas();
@@ -81,23 +83,27 @@ public class DialogoAgregarNodo extends JFrame{
 	}
 	
 	private void mouseClicked(){
-		_botones.get(0).addMouseListener(new MouseAdapter() {
+		for (int i = 0; i < _botones.size(); i++) {
+			int index = i;
+			accionesMouse(i, index);
+		}
+	}
+	
+	private void accionesMouse(int nroBoton, int index){
+		_botones.get(nroBoton).addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				
-				if(seCargaronBienLosDatos()){
+			public void mouseClicked(MouseEvent arg0){
+				if(index == 0){
+					if(seCargaronBienLosDatos()){
+						dispose();
+					}
+					else{
+						JOptionPane.showMessageDialog(new JFrame(), "Por favor revisa los datos ingresados.");
+					}
+				}
+				if(index == 1){
 					dispose();
 				}
-				else{
-					JOptionPane.showMessageDialog(new JFrame(), "Por favor revisa los datos ingresados.");
-				}
-			}
-		});
-		
-		_botones.get(1).addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				dispose();
 			}
 		});
 	}
@@ -114,23 +120,23 @@ public class DialogoAgregarNodo extends JFrame{
 		return	bien;
 	}
 
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					DialogoAgregarNodo d = new DialogoAgregarNodo();
-					d.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		
-	}
 
 	public void limpiarDatos() {
 		for (JTextField jTextField : _textoInput) {
 			jTextField.setText("");
 		}
 	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					DialogoAgregarNodo d = DialogoAgregarNodo.getInstancia();
+//					d.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//		
+//	}
 }

@@ -1,15 +1,30 @@
 package interfaz;
 
-import java.awt.EventQueue;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.*;
 public class DialogoEliminarNodo extends JFrame{
+	private static DialogoEliminarNodo _instancia;
 	private static final long serialVersionUID = 1L;
 	private String[] _nodos;
-	public DialogoEliminarNodo(String[] nodos) {
+	private ArrayList<JButton> _botones = new ArrayList<>();
+	
+	
+	private DialogoEliminarNodo() {
 		super("Eliminar nodo");
-		_nodos = nodos;
-		iniciar();
 	}
+	
+	static{
+		_instancia = new DialogoEliminarNodo();
+	}
+	public static DialogoEliminarNodo getInstancia(String[] nodos){
+		_instancia.cargarNodos(nodos);
+		_instancia.iniciar();
+		return _instancia;
+	}
+	
 	private void iniciar(){
 		
 		setBounds(500, 100, 290, 200);
@@ -24,28 +39,70 @@ public class DialogoEliminarNodo extends JFrame{
 		comboBox.setBounds(30, 50, 220, 20);
 		getContentPane().add(comboBox);
 		
-		JButton botonEliminar = new JButton("Eliminar");
-		botonEliminar.setBounds(30, 100, 100, 20);
-		getContentPane().add(botonEliminar);
+		cargarBotones();
+		mouseClicked();
 		
-		JButton botonCancelar = new JButton("Cancelar");
-		botonCancelar.setBounds(150, 100, 100, 20);
-		getContentPane().add(botonCancelar);
 		
 		setResizable(false);
 	}
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					String[] nodos = {"1","2","3","4"};
-					DialogoEliminarNodo d = new DialogoEliminarNodo(nodos);
-					d.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
+	private void cargarNodos(String[] nodos){
+		_nodos = nodos;
+	}
+	private void cargarBotones(){
+		String[] opciones = {"Eliminar", "Cancelar"};
+		int posicionX = 30;
+		for (int i = 0; i < 2; i++) {
+			_botones.add(new JButton(opciones[i]));
+			_botones.get(i).setBounds(posicionX, 100,100,20);
+			getContentPane().add(_botones.get(i));
+			posicionX += 120;
+		}
+	}
+	
+	private void mouseClicked(){
+		for (int i = 0; i < _botones.size(); i++) {
+			int index = i;
+			_botones.get(i).addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0){
+					if(index == 0){
+						
+					}
+					if(index == 1){
+						dispose();
+					}
 				}
+				
+			});
+		}
+		_botones.get(0).addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
 			}
 		});
 		
+		_botones.get(1).addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				dispose();
+			}
+		});
 	}
+	
+	
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					String[] nodos = {"1","2","3","4"};
+//					DialogoEliminarNodo d = DialogoEliminarNodo.getInstancia(nodos);
+//					d.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//		
+//	}
 }
