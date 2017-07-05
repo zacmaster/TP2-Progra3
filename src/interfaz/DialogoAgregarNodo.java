@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import util.Chequear;
+
 
 public class DialogoAgregarNodo extends JFrame{
 	private static DialogoAgregarNodo _instancia;

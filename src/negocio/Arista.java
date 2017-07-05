@@ -1,5 +1,7 @@
 package negocio;
 
+import util.Calcular;
+
 public class Arista {
 	boolean _tienePeaje;
 	Nodo _nodo1;
@@ -17,7 +19,7 @@ public class Arista {
 	}
 	
 	double distancia(){
-			return Coordenada.distancia(_nodo1._latitud, _nodo1._longitud, _nodo2._latitud, _nodo2._longitud);
+			return Calcular.distancia(_nodo1._latitud, _nodo1._longitud, _nodo2._latitud, _nodo2._longitud);
 	}
 	@Override
 	public boolean equals(Object objeto){

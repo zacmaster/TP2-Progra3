@@ -3,6 +3,8 @@ package negocio;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import util.Calcular;
+
 public class GrafoTest {
 	Grafo _grafo = new Grafo(new Nodo("Buenos Aires",-34.6083,-58.3712){});
 	
@@ -83,7 +85,7 @@ public class GrafoTest {
 		cargarCiudades();
 		Nodo cordoba = _grafo.buscarNodoPorNombre("Cordoba");
 		Nodo bsAs = _grafo.buscarNodoPorNombre("Buenos Aires");
-		double	distancia = Coordenada.distancia(bsAs._latitud, bsAs._longitud,
+		double	distancia = Calcular.distancia(bsAs._latitud, bsAs._longitud,
 				cordoba._latitud, cordoba._longitud);
 		assertEquals((int) distancia, (int) _grafo.distanciaNodos("Cordoba","Buenos Aires"));
 	}

@@ -1,9 +1,6 @@
-package negocio;
+package util;
 
-public class Coordenada {
-	public static void main(String[] args) {
-		System.out.println(distancia(-34.6083, -58.3712, -31.4, -64.1833));;
-	}
+public class Calcular {
 	
 	public static double distancia(double lat1, double lon1, double lat2, double lon2) {
 		double theta = lon1 - lon2;

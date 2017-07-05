@@ -4,6 +4,8 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import util.Calcular;
+
 public class AristaTest {
 	Nodo _bsAs = new Nodo("Buenos Aires",-34.6083,-58.3712);
 	Nodo _santaFe = new Nodo("Santa Fe",-31.6333, -60.7);
@@ -21,7 +23,7 @@ public class AristaTest {
 	
 	@Test
 	public void probarDistancia(){
-		int  distancia = (int)Coordenada.distancia(_bsAs._latitud,
+		int  distancia = (int)Calcular.distancia(_bsAs._latitud,
 			_bsAs._longitud, _santaFe._latitud, _santaFe._longitud);
 		
 		assertEquals(distancia, (int) _arista.distancia());
