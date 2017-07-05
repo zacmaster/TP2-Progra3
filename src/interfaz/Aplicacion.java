@@ -1,7 +1,6 @@
 package interfaz;
 
 import java.awt.EventQueue;
-//import javax.swing.JFrame;
 
 public class Aplicacion {
 	public static void main(String[] args) {

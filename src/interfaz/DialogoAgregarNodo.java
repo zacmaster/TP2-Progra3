@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 
 
 public class DialogoAgregarNodo extends JFrame{
+	private static DialogoAgregarNodo _instancia;
 	private static final long serialVersionUID = 1L;
 	@SuppressWarnings("unused")
 	private String _nombreNodo;
@@ -25,14 +26,19 @@ public class DialogoAgregarNodo extends JFrame{
 	private ArrayList<JButton> _botones = new ArrayList<>();
 	
 	
-	public DialogoAgregarNodo(){
+	private  DialogoAgregarNodo(){
 		super("Agregar nodo");
 		iniciar();
+	}
+	static{
+		_instancia = new DialogoAgregarNodo();
+	}
+	public static DialogoAgregarNodo getInstancia(){
+		return _instancia;
 	}
 	
 	private void iniciar(){
 		setBounds(500, 200, 300, 250);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);
 		
 		cargarEtiquetas();
@@ -118,5 +124,11 @@ public class DialogoAgregarNodo extends JFrame{
 			}
 		});
 		
+	}
+
+	public void limpiarDatos() {
+		for (JTextField jTextField : _textoInput) {
+			jTextField.setText("");
+		}
 	}
 }
