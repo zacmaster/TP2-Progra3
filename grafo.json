@@ -1,0 +1,127 @@
+{
+  "_nodos": [
+    {
+      "_nombre": "Buenos Aires",
+      "_latitud": -34.6083,
+      "_longitud": -58.3712
+    },
+    {
+      "_nombre": "Santa Fe",
+      "_latitud": -31.6333,
+      "_longitud": -60.7
+    },
+    {
+      "_nombre": "Cordoba",
+      "_latitud": -31.4,
+      "_longitud": -64.1833
+    },
+    {
+      "_nombre": "Misiones",
+      "_latitud": -27.3833,
+      "_longitud": -55.8833
+    },
+    {
+      "_nombre": "Neuquen",
+      "_latitud": -38.95,
+      "_longitud": -68.0667
+    },
+    {
+      "_nombre": "Salta",
+      "_latitud": -24.7833,
+      "_longitud": -65.4167
+    }
+  ],
+  "_aristas": [
+    {
+      "_tienePeaje": false,
+      "_nodo1": {
+        "_nombre": "Buenos Aires",
+        "_latitud": -34.6083,
+        "_longitud": -58.3712
+      },
+      "_nodo2": {
+        "_nombre": "Santa Fe",
+        "_latitud": -31.6333,
+        "_longitud": -60.7
+      }
+    },
+    {
+      "_tienePeaje": false,
+      "_nodo1": {
+        "_nombre": "Buenos Aires",
+        "_latitud": -34.6083,
+        "_longitud": -58.3712
+      },
+      "_nodo2": {
+        "_nombre": "Cordoba",
+        "_latitud": -31.4,
+        "_longitud": -64.1833
+      }
+    },
+    {
+      "_tienePeaje": false,
+      "_nodo1": {
+        "_nombre": "Buenos Aires",
+        "_latitud": -34.6083,
+        "_longitud": -58.3712
+      },
+      "_nodo2": {
+        "_nombre": "Misiones",
+        "_latitud": -27.3833,
+        "_longitud": -55.8833
+      }
+    },
+    {
+      "_tienePeaje": false,
+      "_nodo1": {
+        "_nombre": "Cordoba",
+        "_latitud": -31.4,
+        "_longitud": -64.1833
+      },
+      "_nodo2": {
+        "_nombre": "Neuquen",
+        "_latitud": -38.95,
+        "_longitud": -68.0667
+      }
+    },
+    {
+      "_tienePeaje": false,
+      "_nodo1": {
+        "_nombre": "Misiones",
+        "_latitud": -27.3833,
+        "_longitud": -55.8833
+      },
+      "_nodo2": {
+        "_nombre": "Salta",
+        "_latitud": -24.7833,
+        "_longitud": -65.4167
+      }
+    },
+    {
+      "_tienePeaje": false,
+      "_nodo1": {
+        "_nombre": "Salta",
+        "_latitud": -24.7833,
+        "_longitud": -65.4167
+      },
+      "_nodo2": {
+        "_nombre": "Santa Fe",
+        "_latitud": -31.6333,
+        "_longitud": -60.7
+      }
+    },
+    {
+      "_tienePeaje": false,
+      "_nodo1": {
+        "_nombre": "Santa Fe",
+        "_latitud": -31.6333,
+        "_longitud": -60.7
+      },
+      "_nodo2": {
+        "_nombre": "Cordoba",
+        "_latitud": -31.4,
+        "_longitud": -64.1833
+      }
+    }
+  ]
+}
