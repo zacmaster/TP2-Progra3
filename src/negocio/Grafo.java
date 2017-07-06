@@ -86,6 +86,13 @@ public class Grafo {
 		}
 		return existe;
 	}
+	public boolean existeNodo(Nodo n){
+		boolean existe = false;
+		for (Nodo nodo : _nodos) {
+			if(nodo.equals(nodo))existe = true;
+		}
+		return existe;
+	}
 	
 	public Nodo buscarNodoPorNombre(String nombre){
 		Nodo  nodoNuevo = null;
@@ -94,7 +101,7 @@ public class Grafo {
 				nodoNuevo = nodo;
 			}
 		}
-		if(nodoNuevo == null) throw new IllegalArgumentException();
+		if(nodoNuevo == null) throw new IllegalArgumentException("El nodo no existe!");
 		return nodoNuevo;
 	}
 
