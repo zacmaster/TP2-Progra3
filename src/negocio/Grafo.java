@@ -4,8 +4,7 @@ import java.util.ArrayList;
 
 public class Grafo {
 	ArrayList<Nodo> _nodos;
-	public ArrayList<Arista> _aristas;
-
+	ArrayList<Arista> _aristas;
 	
 	public Grafo(Nodo nodo){
 		_nodos = new ArrayList<>();
@@ -13,24 +12,15 @@ public class Grafo {
 		_nodos.add(nodo);
 	}
 	
-	public void agregarNodo(String anterior, Nodo actual,boolean peaje){
-		if(!_nodos.contains(actual)){
-			if(anterior != null){
-				Nodo nodo1 = buscarNodoPorNombre(anterior);
-				_nodos.add(actual);
-				Arista arista = new Arista(nodo1, actual, peaje);
-				_aristas.add(arista);
-			}
-			else{
-				_nodos.add(actual);
-			}
-		}
+	public void agregarNodo(Nodo nodo){
+		if(!_nodos.contains(nodo))_nodos.add(nodo);
 	}
 	
-	public void agregarArista(String nodo1, String nodo2, boolean peaje){
-		Nodo n1 = buscarNodoPorNombre(nodo1);
-		Nodo n2 = buscarNodoPorNombre(nodo2);
-		Arista arista = new Arista(n1, n2, peaje);
+	public void agregarArista(Nodo nodo1, Nodo nodo2, boolean peaje){
+		if(!_nodos.contains(nodo1) || !_nodos.contains(nodo2))
+		throw new IllegalArgumentException("Nodos inexistentes");
+			
+		Arista arista = new Arista(nodo1, nodo2, peaje);
 		if(!existeArista(arista))_aristas.add(arista);
 	}
 	
@@ -59,10 +49,7 @@ public class Grafo {
 	}
 	
 	
-	public double distanciaNodos(String n1, String n2){
-		
-		Nodo nodo1 = buscarNodoPorNombre(n1);
-		Nodo nodo2 = buscarNodoPorNombre(n2);
+	public double distanciaNodos(Nodo nodo1, Nodo nodo2){
 		double distancia = Double.MAX_VALUE;
 		
 		for (Arista arista : _aristas) {
@@ -74,10 +61,8 @@ public class Grafo {
 	}
 	
 	
-	public boolean estanConectados(String nodo1, String nodo2){
-		Nodo n1 = buscarNodoPorNombre(nodo1);
-		Nodo n2 = buscarNodoPorNombre(nodo2);
-		return existeArista(new Arista(n1, n2, false));
+	public boolean estanConectados(Nodo nodo1, Nodo nodo2){
+		return existeArista(new Arista(nodo1, nodo2, false));
 	}
 	
 	
@@ -102,7 +87,7 @@ public class Grafo {
 		return existe;
 	}
 	
-	Nodo buscarNodoPorNombre(String nombre){
+	public Nodo buscarNodoPorNombre(String nombre){
 		Nodo  nodoNuevo = null;
 		for (Nodo nodo : _nodos) {
 			if(nodo._nombre == nombre){
@@ -112,5 +97,22 @@ public class Grafo {
 		if(nodoNuevo == null) throw new IllegalArgumentException();
 		return nodoNuevo;
 	}
+
+	
+	public ArrayList<Nodo> get_nodos() {
+		return _nodos;
+	}
+	public ArrayList<Arista> get_aristas() {
+		return _aristas;
+	}
+	public int cantidadDePeajes(){
+		int contador = 0;
+		for (Arista arista : _aristas) {
+			if(arista._tienePeaje)contador++;
+		}
+		return contador;
+	}
+
+	
 	
 }

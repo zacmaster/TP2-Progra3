@@ -15,7 +15,7 @@ public class GrafoTest {
 	@Test
 	public void agregarNodo(){
 		Nodo nodo = new Nodo("Santa Fe", -31.6333, -60.7);
-		_grafo.agregarNodo("Buenos Aires", nodo, true);
+		_grafo.agregarNodo(nodo);
 		assertEquals(2, _grafo._nodos.size());
 	}
 	
@@ -23,10 +23,13 @@ public class GrafoTest {
 	public void agregarNuevaArista(){
 		cargarCiudades(); 
 		int cantidadAristas = _grafo._aristas.size();
-		assertFalse(_grafo.estanConectados("Misiones","Santa Fe"));
+		Nodo misiones = _grafo.buscarNodoPorNombre("Misiones");
+		Nodo staFe = _grafo.buscarNodoPorNombre("Santa Fe"); 
+		assertFalse	(_grafo.estanConectados(misiones,staFe));
 		
-		_grafo.agregarArista("Misiones", "Santa Fe", false);
-		assertTrue(_grafo.estanConectados("Misiones","Santa Fe"));
+		_grafo.agregarArista(misiones,staFe,false);
+		
+		assertTrue(_grafo.estanConectados(misiones,staFe));
 		assertEquals(++cantidadAristas, _grafo._aristas.size());
 	}
 	@Test
@@ -35,14 +38,20 @@ public class GrafoTest {
 		int cantidadAristas = _grafo._aristas.size();
 		//intento agregar una arista que ya existe pero no se agrega.
 		//Por lo tanto el tamanio de las aristas sigue siendo el mismo
-		_grafo.agregarArista("Buenos Aires", "Cordoba", false);
-		_grafo.agregarArista("Cordoba", "Buenos Aires", false);
+		
+		Nodo bsAs = _grafo.buscarNodoPorNombre("Buenos Aires");
+		Nodo cordoba = _grafo.buscarNodoPorNombre("Cordoba");
+		
+		_grafo.agregarArista(bsAs, cordoba, false);
+		_grafo.agregarArista(cordoba, bsAs, false);
 		assertEquals(cantidadAristas, _grafo._aristas.size());
 	}
 	
 	@Test (expected = IllegalArgumentException.class)
 	public void agregarAristaCiudadNoExistente(){
-		_grafo.agregarArista("Ciudad falsa1", "Ciudad falsa2", false);
+		Nodo ciudadFalsa1 = new Nodo("Ciudad falsa1",300,400);
+		Nodo ciudadFalsa2 = new Nodo("Ciudad falsa2",300,200);
+		_grafo.agregarArista(ciudadFalsa1,ciudadFalsa2, false);
 	}
 	
 	
@@ -68,8 +77,11 @@ public class GrafoTest {
 	public void eliminarArista(){
 		cargarCiudades();
 		int cantidadDeAristas = _grafo._aristas.size();
+		Nodo bsAs = _grafo.buscarNodoPorNombre("Buenos Aires");
+		Nodo staFe = _grafo.buscarNodoPorNombre("Santa Fe");
+		
 		//Demuestro que estan conectados primero:
-		assertTrue(_grafo.estanConectados("Buenos Aires", "Santa Fe"));
+		assertTrue(_grafo.estanConectados(bsAs,staFe));
 		
 		//Elimina la arista que conecta a BSAS con Sta.Fe
 		Nodo n1 = _grafo.buscarNodoPorNombre("Buenos Aires");
@@ -77,7 +89,7 @@ public class GrafoTest {
 		_grafo.eliminarArista(n1,n2);
 		
 		assertEquals(--cantidadDeAristas,_grafo._aristas.size());
-		assertFalse(_grafo.estanConectados("Buenos Aires", "Santa Fe"));
+		assertFalse(_grafo.estanConectados(bsAs, staFe));
 	}
 	
 	@Test
@@ -87,7 +99,7 @@ public class GrafoTest {
 		Nodo bsAs = _grafo.buscarNodoPorNombre("Buenos Aires");
 		double	distancia = Calcular.distancia(bsAs._latitud, bsAs._longitud,
 				cordoba._latitud, cordoba._longitud);
-		assertEquals((int) distancia, (int) _grafo.distanciaNodos("Cordoba","Buenos Aires"));
+		assertEquals((int) distancia, (int) _grafo.distanciaNodos(cordoba,bsAs));
 	}
 	
 	@Test
@@ -95,8 +107,11 @@ public class GrafoTest {
 		//Quiero demostrar que si dos nodos no estan conectados
 		//mediante una arista, entonces en principio su distancia es infinita
 		cargarCiudades();
+		Nodo bsAs = _grafo.buscarNodoPorNombre("Buenos Aires");
+		Nodo neuquen = _grafo.buscarNodoPorNombre("Neuquen");
+		
 		double infinito = Double.MAX_VALUE;
-		double distanciaBuenosAiresNeuquen = _grafo.distanciaNodos("Buenos Aires", "Neuquen");
+		double distanciaBuenosAiresNeuquen = _grafo.distanciaNodos(bsAs,neuquen);
 		assertEquals((int)infinito, (int) distanciaBuenosAiresNeuquen);
 		
 	}
@@ -104,8 +119,11 @@ public class GrafoTest {
 	@Test 
 	public void estanConectadas(){
 		cargarCiudades();
-		assertTrue(_grafo.estanConectados("Buenos Aires", "Cordoba"));
-		assertFalse(_grafo.estanConectados("Buenos Aires", "Neuquen"));
+		Nodo bsAs = _grafo.buscarNodoPorNombre("Buenos Aires");
+		Nodo neuquen = _grafo.buscarNodoPorNombre("Neuquen");
+		Nodo cordoba = _grafo.buscarNodoPorNombre("Cordoba");
+		assertTrue(_grafo.estanConectados(bsAs, cordoba));
+		assertFalse(_grafo.estanConectados(bsAs, neuquen));
 	}
 	
 	@Test
@@ -134,15 +152,21 @@ public class GrafoTest {
 	
 	
 	private void cargarCiudades(){
+		Nodo bsAs = _grafo.buscarNodoPorNombre("Buenos Aires");
 		Nodo santaFe = new Nodo("Santa Fe",-31.6333, -60.7);
 		Nodo cordoba = new Nodo("Cordoba",-31.4,-64.1833);
 		Nodo neuquen = new Nodo("Neuquen",-38.95,-68.0667);
 		Nodo misiones = new Nodo("Misiones",-27.3833,-55.8833);
 		
-		_grafo.agregarNodo("Buenos Aires", santaFe, false);
-		_grafo.agregarNodo("Buenos Aires", cordoba, false);
-		_grafo.agregarNodo("Cordoba", neuquen, false);
-		_grafo.agregarNodo("Buenos Aires", misiones, false);
+		_grafo.agregarNodo(santaFe);
+		_grafo.agregarNodo(cordoba);
+		_grafo.agregarNodo(neuquen);
+		_grafo.agregarNodo(misiones);
+		
+		_grafo.agregarArista(bsAs, santaFe, false);
+		_grafo.agregarArista(bsAs, cordoba, false);
+		_grafo.agregarArista(bsAs, misiones, false);
+		_grafo.agregarArista(cordoba, neuquen, false);
 		
 	}
 	

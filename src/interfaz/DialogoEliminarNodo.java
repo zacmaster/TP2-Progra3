@@ -80,20 +80,4 @@ public class DialogoEliminarNodo extends JFrame{
 			
 		});
 	}
-	
-	
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					String[] nodos = {"1","2","3","4"};
-//					DialogoEliminarNodo d = DialogoEliminarNodo.getInstancia(nodos);
-//					d.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//		
-//	}
 }

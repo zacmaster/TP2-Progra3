@@ -23,6 +23,9 @@ public class Nodo
 				_latitud == nodo._latitud);
 		
 	}
+	public String getNombre(){
+		return _nombre;
+	}
 
 
 }

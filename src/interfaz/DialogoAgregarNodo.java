@@ -126,17 +126,4 @@ public class DialogoAgregarNodo extends JFrame{
 			jTextField.setText("");
 		}
 	}
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					DialogoAgregarNodo d = DialogoAgregarNodo.getInstancia();
-//					d.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//		
-//	}
 }

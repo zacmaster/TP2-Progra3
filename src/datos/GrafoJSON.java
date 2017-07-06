@@ -36,5 +36,8 @@ public class GrafoJSON {
 				
 			} catch (Exception e) {}
 		}
+		public Grafo getGrafo(){
+			return _grafo;
+		}
 
 }
