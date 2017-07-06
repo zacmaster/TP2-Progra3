@@ -1,11 +1,12 @@
 package interfaz;
 
-//import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -14,14 +15,11 @@ import javax.swing.JTextField;
 import util.Chequear;
 
 
-public class DialogoAgregarNodo extends JFrame{
+public class DialogoAgregarNodo extends JDialog{
 	private static DialogoAgregarNodo _instancia;
 	private static final long serialVersionUID = 1L;
-	@SuppressWarnings("unused")
 	private String _nombreNodo;
-	@SuppressWarnings("unused")
 	private double _latitud;
-	@SuppressWarnings("unused")
 	private double _longitud;
 	private ArrayList<JLabel> _etiquetas = new ArrayList<>();
 	private ArrayList<JTextField> _textoInput = new ArrayList<>();
@@ -29,7 +27,6 @@ public class DialogoAgregarNodo extends JFrame{
 	
 	
 	private  DialogoAgregarNodo(){
-		super("Agregar nodo");
 		iniciar();
 	}
 	static{
@@ -40,6 +37,7 @@ public class DialogoAgregarNodo extends JFrame{
 	}
 	
 	private void iniciar(){
+		setTitle("Agregar Nodo");
 		setBounds(500, 100, 300, 250);
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -83,33 +81,20 @@ public class DialogoAgregarNodo extends JFrame{
 	}
 	
 	private void mouseClicked(){
-		for (int i = 0; i < _botones.size(); i++) {
-			int index = i;
-			accionesMouse(i, index);
-		}
-	}
-	
-	private void accionesMouse(int nroBoton, int index){
-		_botones.get(nroBoton).addMouseListener(new MouseAdapter() {
+		_botones.get(1)
+		.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0){
-				if(index == 0){
-					if(seCargaronBienLosDatos()){
+				if(arg0.getButton() == MouseEvent.BUTTON1){
 						dispose();
-					}
-					else{
-						JOptionPane.showMessageDialog(new JFrame(), "Por favor revisa los datos ingresados.");
-					}
-				}
-				if(index == 1){
-					dispose();
+						limpiarDatos();
 				}
 			}
 		});
 	}
 	
 
-	private boolean seCargaronBienLosDatos() {
+	boolean seCargaronBienLosDatos() {
 		String s = _textoInput.get(0).getText();
 		String s1 = _textoInput.get(1).getText();
 		String s2 = _textoInput.get(2).getText();
@@ -120,10 +105,31 @@ public class DialogoAgregarNodo extends JFrame{
 		return	bien;
 	}
 
-
+	public void agregarConfirmacion(MouseListener mouseListener){
+		_botones.get(0).addMouseListener(mouseListener);
+	}
+	
 	public void limpiarDatos() {
 		for (JTextField jTextField : _textoInput) {
 			jTextField.setText("");
 		}
 	}
+
+	public String get_nombreNodo() {
+		return _nombreNodo;
+	}
+
+	public double get_latitud() {
+		return _latitud;
+	}
+
+	public double get_longitud() {
+		return _longitud;
+	}
+	void mensajeError(){
+		_instancia.setAlwaysOnTop(false);
+		JOptionPane.showMessageDialog(new JFrame(), "Por favor revisa los datos ingresados.");
+		
+	}
 }
+
