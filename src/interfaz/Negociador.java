@@ -29,7 +29,7 @@ public class Negociador {
 	}
 	
 	public void eliminarNodo(String nombre){
-		_grafo.eliminarNodo(nombre);
+		if(nombre != "")_grafo.eliminarNodo(nombre);
 	}
 	public void agregarArista(String nodo1, String nodo2, boolean peaje){
 		Nodo n1 = _grafo.buscarNodoPorNombre(nodo1);
