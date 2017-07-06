@@ -15,13 +15,14 @@ public class PanelDerecho extends JPanel{
 	private JPanel _panelDerecho = new JPanel();
 	private ArrayList<JButton> _botones;
 	private JTextArea _leyenda;
-	private String[] _textoBotones =	{"Agregar nodo","Borrar nodo","Agregar union",
-			"Borrar union","Distancia A y B","Camino Min"};
+	private String[] _textoBotones =	{"Agregar nodo","Borrar nodo","Agregar ruta",
+			"Borrar ruta","Distancia A y B","Camino Min"};
 	private DialogoAgregarNodo _dialogoAgregarNodo;
 	private DialogoEliminarNodo _dialogoEliminarNodo;
 	private DialogoAgregarArista _dialogoAgregarArista;
 	private DialogoEliminarArista _dialogoEliminarArista;
 	private DialogoDistancia _dialogoDistancia;
+	private DialogoCaminoMinimo _dialogoCaminoMinimo;
 	
 	
 	
@@ -94,6 +95,7 @@ public class PanelDerecho extends JPanel{
 					dialogoAgregarArista(i);
 					dialogoEliminarArista(i);
 					dialogoDistancia(i);
+					dialogoCaminoMinimo(i);
 				}
 			});
 		indice++;
@@ -101,6 +103,14 @@ public class PanelDerecho extends JPanel{
 	}
 	
 	
+	private void dialogoCaminoMinimo(int i) {
+		String[] s = {"1","2","4"};
+		if(i == 5){
+			_dialogoCaminoMinimo = DialogoCaminoMinimo.getInstancia(s);
+			_dialogoCaminoMinimo.setVisible(true);
+		}
+	}
+
 	private void dialogoDistancia(int i) {
 		String[] s = {"1","2","4"};
 		if(i == 4){
