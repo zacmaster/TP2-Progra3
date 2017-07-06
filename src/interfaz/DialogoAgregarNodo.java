@@ -40,7 +40,7 @@ public class DialogoAgregarNodo extends JFrame{
 	}
 	
 	private void iniciar(){
-		setBounds(500, 200, 300, 250);
+		setBounds(500, 100, 300, 250);
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);

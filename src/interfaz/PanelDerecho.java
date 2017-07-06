@@ -19,6 +19,9 @@ public class PanelDerecho extends JPanel{
 			"Borrar union","Distancia A y B","Camino Min"};
 	private DialogoAgregarNodo _dialogoAgregarNodo;
 	private DialogoEliminarNodo _dialogoEliminarNodo;
+	private DialogoAgregarArista _dialogoAgregarArista;
+	private DialogoEliminarArista _dialogoEliminarArista;
+	private DialogoDistancia _dialogoDistancia;
 	
 	
 	
@@ -90,6 +93,7 @@ public class PanelDerecho extends JPanel{
 					dialogoEliminarNodo(i);
 					dialogoAgregarArista(i);
 					dialogoEliminarArista(i);
+					dialogoDistancia(i);
 				}
 			});
 		indice++;
@@ -97,16 +101,33 @@ public class PanelDerecho extends JPanel{
 	}
 	
 	
-	private void dialogoEliminarArista(int i) {
+	private void dialogoDistancia(int i) {
+		String[] s = {"1","2","4"};
+		if(i == 4){
+			_dialogoDistancia = DialogoDistancia.getInstancia(s);
+			_dialogoDistancia.setVisible(true);
+		}
 		
+	}
+
+	private void dialogoEliminarArista(int i) {
+		String[] s = {"1","2","4"};
+		if(i == 3){
+			_dialogoEliminarArista = DialogoEliminarArista.getInstancia(s);
+			_dialogoEliminarArista.setVisible(true);
+		}
 	}
 
 	private void dialogoAgregarArista(int i) {
-		
+		String[] s = {"1","2","4"};
+		if(i == 2){
+			_dialogoAgregarArista = DialogoAgregarArista.getInstancia(s);
+			_dialogoAgregarArista.setVisible(true);
+		}
 	}
 
 	private void dialogoEliminarNodo(int i) {
-		String[] s = {"1","2","3"};
+		String[] s = {"1","2","3"};//Revisar
 		if(i == 1){
 			_dialogoEliminarNodo = DialogoEliminarNodo.getInstancia(s);
 			_dialogoEliminarNodo.setVisible(true);
@@ -115,11 +136,11 @@ public class PanelDerecho extends JPanel{
 
 	private void dialogoAgregarNodo(int i){
 		if(i == 0){
-				_dialogoAgregarNodo = DialogoAgregarNodo.getInstancia();
-				_dialogoAgregarNodo.setVisible(true);
-				_dialogoAgregarNodo.limpiarDatos();
-			}
+			_dialogoAgregarNodo = DialogoAgregarNodo.getInstancia();
+			_dialogoAgregarNodo.setVisible(true);
+			_dialogoAgregarNodo.limpiarDatos();
 		}
+	}
 			
 	
 	private void cargarLeyenda(){
