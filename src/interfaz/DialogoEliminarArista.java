@@ -2,14 +2,17 @@ package interfaz;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class DialogoEliminarArista extends JFrame{
+public class DialogoEliminarArista extends JDialog{
 	private static final long serialVersionUID = 1L;
 	private static DialogoEliminarArista _instancia;
 	private String[] _nodos;
@@ -19,13 +22,12 @@ public class DialogoEliminarArista extends JFrame{
 	
 	
 	private DialogoEliminarArista(){
-		super("Eliminar ruta");
 	}
 	static{
 		_instancia = new DialogoEliminarArista();
+		_instancia.setTitle("Eliminar ruta");
 	}
-	public static DialogoEliminarArista getInstancia(String[] nodos){
-		_instancia.cargarNodos(nodos);
+	public static DialogoEliminarArista getInstancia(){
 		_instancia.iniciar();
 		return _instancia;
 	}
@@ -33,31 +35,19 @@ public class DialogoEliminarArista extends JFrame{
 		setBounds(500, 100, 400, 180);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
-		cargarComboBoxes();
 		cargarBotones();
 		cargarEtiquetas();
 		mouseClicked();
 	}
 	private void mouseClicked() {
-		for (int i = 0; i < _botones.size(); i++) {
-			int index = i;
-			accionesMouse(i, index);
-		}
-	}
-	private void accionesMouse(int i, int index) {
-		_botones.get(i).addMouseListener(new MouseAdapter() {
+		_botones.get(1).addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0){
-				if(index == 0){ //Eliminar
-					
-				}
-				if(index == 1){ //Cancelar
-					dispose();
-				}
+				dispose();
 			}
-			
 		});
 	}
+	
 	private void cargarEtiquetas() {
 		String[] opciones = {"Ciudad origen:", "Ciudad destino:"};
 		int posicionX = 20;
@@ -81,14 +71,32 @@ public class DialogoEliminarArista extends JFrame{
 	private void cargarComboBoxes() {
 		int posicionX = 20;
 		for (int i = 0; i < 2; i++) {
-			_comboBoxes.add(new JComboBox<String>(_nodos));
+			_comboBoxes.add(new JComboBox<String>(new  DefaultComboBoxModel<>(_nodos)));
 			_comboBoxes.get(i).setBounds(posicionX, 50, 150, 20);
 			getContentPane().add(_comboBoxes.get(i));
 			posicionX += 200;
 		}
 	}
-	private void cargarNodos(String[] nodos) {
+	public void cargarNodos(String[] nodos) {
 		_nodos = nodos;
+		cargarComboBoxes();
 	}
-	
+	void limpiar(){
+		if(_nodos.length > 0){
+			DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>(_nodos);
+			_comboBoxes.get(0).setModel(model);
+			_comboBoxes.get(1).setModel(model);
+			_comboBoxes.get(0).setSelectedIndex(0);
+			_comboBoxes.get(1).setSelectedIndex(0);
+		}
+	}
+	public String getPrimerNodo(){
+		return _comboBoxes.get(0).getSelectedItem().toString();
+	}
+	public String getSegundoNodo(){
+		return _comboBoxes.get(1).getSelectedItem().toString();
+	}
+	public void agregarConfirmacion(MouseListener mouseListener){
+		_botones.get(0).addMouseListener(mouseListener);
+	}
 }

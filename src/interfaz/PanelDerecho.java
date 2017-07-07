@@ -1,12 +1,15 @@
 package interfaz;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
-	import javax.swing.JPanel;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 
@@ -17,18 +20,20 @@ public class PanelDerecho extends JPanel{
 	private JTextArea _leyenda;
 	private String[] _textoBotones =	{"Agregar nodo","Borrar nodo","Agregar ruta",
 			"Borrar ruta","Distancia A y B","Camino Min","Guardar"};
-	private DialogoAgregarNodo _dialogoAgregarNodo;
-	private DialogoEliminarNodo _dialogoEliminarNodo;
-	private DialogoAgregarArista _dialogoAgregarArista;
-	private DialogoEliminarArista _dialogoEliminarArista;
+	
+	Negociador _negociador;
+	
+	private DialogoAgregarNodo _dialogoAgregarNodo = DialogoAgregarNodo.getInstancia();
+	private DialogoEliminarNodo _dialogoEliminarNodo = DialogoEliminarNodo.getInstancia();
+	private DialogoAgregarArista _dialogoAgregarArista = DialogoAgregarArista.getInstancia();
+	private DialogoEliminarArista _dialogoEliminarArista = DialogoEliminarArista.getInstancia();
 	private DialogoDistancia _dialogoDistancia;
 	private DialogoCaminoMinimo _dialogoCaminoMinimo;
-	private Negociador _negociador;
 	
 	
 	
-	public PanelDerecho() {
-		_negociador = Negociador.getInstancia();
+	public PanelDerecho(Negociador _negociador) {
+		this._negociador = _negociador;
 		_panelDerecho.setBackground(Color.WHITE);
 		_panelDerecho.setBounds(550, 0, 250, 562);
 		_panelDerecho.setLayout(null);
@@ -36,6 +41,7 @@ public class PanelDerecho extends JPanel{
 		cargarLeyenda();
 		mouseOver();
 		mouseClicked();
+		confirmaciones();
 		
 	}
 	
@@ -98,9 +104,9 @@ public class PanelDerecho extends JPanel{
 	}
 
 	private void accionesMouseClicked(JButton jButton, int i) {
-		jButton.addMouseListener(new MouseAdapter() {
+		jButton.addActionListener(new ActionListener() {
 			@Override
-			public void mouseClicked(MouseEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				dialogoAgregarNodo(i);
 				dialogoEliminarNodo(i);
 				dialogoAgregarArista(i);
@@ -134,34 +140,120 @@ public class PanelDerecho extends JPanel{
 
 	private void dialogoEliminarArista(int i) {
 		if(i == 3){
-			_dialogoEliminarArista = DialogoEliminarArista.getInstancia(_negociador.nodosEnTexto());
+			_dialogoEliminarArista = DialogoEliminarArista.getInstancia();
+			_dialogoEliminarArista.cargarNodos(_negociador.nodosEnTexto());
 			_dialogoEliminarArista.setVisible(true);
 		}
 	}
 
 	private void dialogoAgregarArista(int i) {
 		if(i == 2){
-			_dialogoAgregarArista = DialogoAgregarArista.getInstancia(_negociador.nodosEnTexto());
+			_dialogoAgregarArista.cargarNodos(_negociador.nodosEnTexto());
 			_dialogoAgregarArista.setVisible(true);
 		}
 	}
 
 	private void dialogoEliminarNodo(int i) {
 		if(i == 1){
-			_dialogoEliminarNodo = DialogoEliminarNodo.getInstancia(_negociador.nodosEnTexto());
+			_dialogoEliminarNodo.cargarNodos(_negociador.nodosEnTexto());
 			_dialogoEliminarNodo.setVisible(true);
 		}
 	}
 
 	private void dialogoAgregarNodo(int i){
 		if(i == 0){
-			_dialogoAgregarNodo = DialogoAgregarNodo.getInstancia();
-			_dialogoAgregarNodo.setVisible(true);
-			_dialogoAgregarNodo.limpiarDatos();
+			if(!_dialogoAgregarNodo.isVisible())
+				_dialogoAgregarNodo.setVisible(true);
+				_dialogoAgregarNodo.setAlwaysOnTop(true);
 		}
+	}
+
+	private void agregarNodoConfirmacion() {
+		_dialogoAgregarNodo.agregarConfirmacion(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {
+				if(e.getButton() == MouseEvent.BUTTON1){
+					if(_dialogoAgregarNodo.seCargaronBienLosDatos()){
+						
+						agregarNodo();
+						_dialogoAgregarNodo.setVisible(false);
+						_dialogoAgregarNodo.limpiarDatos();
+					}
+					else{
+						_dialogoAgregarNodo.mensajeError();
+					}
+				}
+			}
+			public void mouseReleased(MouseEvent e) {}
+			public void mousePressed(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {}
+		});
+	}
+	private void confirmaciones(){
+		agregarNodoConfirmacion();
+		agregarAristaConfirmacion();
+		borrarNodoConfirmacion();
+		borrarAristaConfirmacion();
+	}
+	private void agregarAristaConfirmacion() {
+		_dialogoAgregarArista.agregarConfirmacion(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {
+				if(e.getButton() == MouseEvent.BUTTON1){
+						agregarArista();
+						_dialogoAgregarArista.limpiar();
+						_dialogoAgregarArista.setVisible(false);
+				}
+			}
+			public void mouseReleased(MouseEvent e) {}
+			public void mousePressed(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {}
+		});
+	}
+	private void borrarNodoConfirmacion() {
+		_dialogoEliminarNodo.agregarConfirmacion(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {
+				if(e.getButton() == MouseEvent.BUTTON1 && _negociador.nodosEnTexto().length > 0){
+					_negociador.eliminarNodo(_dialogoEliminarNodo.getElementoSeleccionado());
+					_dialogoEliminarNodo.setVisible(false);
+					_dialogoEliminarNodo.limpiar();
+				}
+			}
+			public void mouseReleased(MouseEvent e) {}
+			public void mousePressed(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {}
+		});
+	}
+	private void borrarAristaConfirmacion() {
+		_dialogoEliminarArista.agregarConfirmacion(new MouseListener() {
+			public void mouseClicked(MouseEvent e) {
+				if(e.getButton() == MouseEvent.BUTTON1 && _negociador.nodosEnTexto().length > 0){
+					_negociador.eliminarArista(_dialogoEliminarArista.getPrimerNodo(), _dialogoEliminarArista.getSegundoNodo());
+					_dialogoEliminarArista.setVisible(false);
+					_dialogoEliminarArista.limpiar();
+				}
+			}
+			public void mouseReleased(MouseEvent e) {}
+			public void mousePressed(MouseEvent e) {}
+			public void mouseExited(MouseEvent e) {}
+			public void mouseEntered(MouseEvent e) {}
+		});
+	}
+
+	private void agregarNodo() {
+		_negociador.agregarNodo(_dialogoAgregarNodo.get_nombreNodo(),
+				_dialogoAgregarNodo.get_latitud(),
+				_dialogoAgregarNodo.get_longitud());
+	}
+	private void agregarArista(){
+		_negociador.agregarArista(_dialogoAgregarArista.getNodo1(),
+				_dialogoAgregarArista.getNodo2(),
+				_dialogoAgregarArista.getPeaje());
 	}
 			
 	
+
 	private void cargarLeyenda(){
 		_leyenda = new JTextArea();
 		_leyenda.setBackground(Color.LIGHT_GRAY);

@@ -26,6 +26,12 @@ public class Nodo
 	public String getNombre(){
 		return _nombre;
 	}
+	public double getLatitud(){
+		return _latitud;
+	}
+	public double getLongitud(){
+		return _longitud;
+	}
 
 
 }

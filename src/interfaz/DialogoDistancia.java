@@ -6,10 +6,11 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class DialogoDistancia extends JFrame{
+public class DialogoDistancia extends JDialog{
 	private static final long serialVersionUID = 1L;
 	private static DialogoDistancia _instancia;
 	private String[] _nodos;
@@ -18,7 +19,6 @@ public class DialogoDistancia extends JFrame{
 	private ArrayList<JComboBox<String>> _comboBoxes = new ArrayList<>();
 	
 	private DialogoDistancia(){
-		super("Calcular distancia");
 	}
 	static{
 		_instancia = new DialogoDistancia();
@@ -37,26 +37,16 @@ public class DialogoDistancia extends JFrame{
 		cargarEtiquetas();
 		mouseClicked();
 	}
+	
 	private void mouseClicked() {
-		for (int i = 0; i < _botones.size(); i++) {
-			int index = i;
-			accionesMouse(i, index);
-		}
-	}
-	private void accionesMouse(int i, int index) {
-		_botones.get(i).addMouseListener(new MouseAdapter() {
+		_botones.get(1).addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0){
-				if(index == 0){ //Calcular
-					
-				}
-				if(index == 1){ //Cancelar
 					dispose();
-				}
 			}
-			
 		});
 	}
+	
 	private void cargarEtiquetas() {
 		String[] opciones = {"Ciudad origen:", "Ciudad destino:"};
 		int posicionX = 20;

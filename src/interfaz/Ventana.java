@@ -7,6 +7,9 @@ import javax.swing.JPanel;
 
 public class Ventana {
 	JFrame _frame;
+	JPanel _panelIzquierdo = new JPanel();
+	private Negociador _negociador = Negociador.getInstancia();
+	PanelDerecho _panelDerecho = new PanelDerecho(_negociador);
 	public Ventana(){
 		initialize();
 	}
@@ -17,22 +20,22 @@ public class Ventana {
 		_frame.setResizable(false);
 		_frame.getContentPane().setLayout(null);
 		
-		JPanel leftPanel = new JPanel();
-		leftPanel.setBackground(new Color(102, 204, 255));
-		leftPanel.setBounds(0, 0, 550, 562);
-		_frame.getContentPane().add(leftPanel);
-		leftPanel.setLayout(null);
-		
-		PanelDerecho pd = new PanelDerecho();
-		
-		_frame.getContentPane().add(pd.getJPanel());
+		_panelIzquierdo.setBackground(new Color(102, 204, 255));
+		_panelIzquierdo.setBounds(0, 0, 550, 562);
+		_frame.getContentPane().add(_panelIzquierdo);
+		_panelIzquierdo.setLayout(null);
 		
 		
+		_frame.getContentPane().add(_panelDerecho.getJPanel());
 		
-		Mapa mapa = new Mapa();
-		leftPanel.add(mapa.getMap());
+		setPanelIzquierdo(_negociador.get_mapa());
 		
 		
 		
+		
+		
+	}
+	public void setPanelIzquierdo(Mapa mapa){
+		_panelIzquierdo.add(mapa.getMap());
 	}
 }

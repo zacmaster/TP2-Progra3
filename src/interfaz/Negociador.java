@@ -11,7 +11,12 @@ public class Negociador {
 	private GrafoJSON _grafoJSON;
 	private Grafo _grafo;
 	private final String ARCHIVO = "grafo.json";
+	private Mapa _mapa = new Mapa();
 	
+	public Mapa get_mapa() {
+		return _mapa;
+	}
+
 	private Negociador(){
 		cargarDatos();
 	}
@@ -26,10 +31,15 @@ public class Negociador {
 	
 	public void agregarNodo(String nombre, double latitud, double longitud){
 		_grafo.agregarNodo(new Nodo(nombre,latitud,longitud));
+		_mapa.agregarNodo(nombre, latitud, longitud);
 	}
 	
 	public void eliminarNodo(String nombre){
-		if(nombre != "")_grafo.eliminarNodo(nombre);
+		if(nombre != ""){
+			_grafo.eliminarNodo(nombre);
+			_mapa.eliminarNodo(nombre);
+		}
+		
 	}
 	public void agregarArista(String nodo1, String nodo2, boolean peaje){
 		Nodo n1 = _grafo.buscarNodoPorNombre(nodo1);
@@ -72,6 +82,12 @@ public class Negociador {
 		return new String[] {"0"};
 	}
 	
+	private void iniciarMapa(ArrayList<Nodo> nodos){
+		for (Nodo nodo : nodos) {
+			_mapa.agregarNodo(nodo.getNombre(), nodo.getLatitud(), nodo.getLongitud());
+		}
+	}
+	
 	
 	
 	
@@ -80,6 +96,7 @@ public class Negociador {
 		_grafoJSON = new GrafoJSON();
 		_grafoJSON.leerArchivo(ARCHIVO);
 		_grafo = _grafoJSON.getGrafo();
+		iniciarMapa(_grafo.get_nodos());
 	}
 
 }

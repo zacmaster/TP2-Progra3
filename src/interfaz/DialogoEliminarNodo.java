@@ -71,7 +71,6 @@ public class DialogoEliminarNodo extends JDialog{
 					dispose();
 					limpiar();
 				}
-			
 		});
 		
 	}

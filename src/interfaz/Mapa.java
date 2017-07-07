@@ -1,17 +1,16 @@
 package interfaz;
 
 import java.awt.Point;
-import org.openstreetmap.gui.jmapviewer.JMapViewer;
-import org.openstreetmap.gui.jmapviewer.JMapViewerTree;
-//import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
+import java.util.ArrayList;
 
-import negocio.Grafo;
-import negocio.Nodo;
+import org.openstreetmap.gui.jmapviewer.Coordinate;
+import org.openstreetmap.gui.jmapviewer.JMapViewer;
+import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
+
 
 public class Mapa{
-	JMapViewerTree _treemapa = new JMapViewerTree("");
 	JMapViewer  _mapa;
-	Grafo _grafo;
+	ArrayList<MapMarkerDot> _marcadores = new ArrayList<>();
 	public Mapa(){
 		_mapa = new JMapViewer();
 		_mapa.setCenter(new Point(1075, 650));
@@ -21,9 +20,26 @@ public class Mapa{
 		_mapa.setLayout(null);
 		
 	}
-	public void iniciar(){
-		_grafo = new Grafo(new Nodo("Buenos Aires",-34.6083,-58.3712){});
+	public void agregarNodo(String nombre, double latitud, double longitud){
+		
+		Coordinate coordenada = new Coordinate(latitud, longitud);
+		MapMarkerDot marca = new MapMarkerDot(nombre,coordenada);
+		_mapa.addMapMarker(marca);
+		_marcadores.add(marca);
 	}
+	
+	public void eliminarNodo(String nombre){
+		int indice = 0;
+		for (MapMarkerDot mapMarkerDot : _marcadores) {
+			if(mapMarkerDot.getName().equals(nombre)){
+				System.out.println("equals");
+				_mapa.removeMapMarker(mapMarkerDot);
+				_marcadores.indexOf(mapMarkerDot);
+			}
+		}
+		_marcadores.remove(indice);
+	}
+	
 	public JMapViewer getMap(){
 		return _mapa;
 		
